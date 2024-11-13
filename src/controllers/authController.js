@@ -37,13 +37,9 @@ async function loginUser(req, res, next) {
 
         const user = await authServices.loginUser(username, password);
         
-        const accessToken = jwt.sign({
+        const token = jwt.sign({
             id: user.id
         }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.JWT_ACCESS_EXIPRES_IN });
-        const refreshToken = jwt.sign({
-            username: user.username,
-            id: user.id
-        }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.JWT_REFRESH_EXPIRES_IN });
 
         res.status(200).json({
             message: 'Login berhasil',
@@ -53,12 +49,8 @@ async function loginUser(req, res, next) {
                     id: user.user_id,
                     username: user.username
                 },
-                token: accessToken,
+                token: token,
             }
-        }).cookie('refreshToken', refreshToken, {
-            httpOnly: NODE_ENV === 'production',
-            secure: NODE_ENV === 'production',
-            maxAge: 7 * 24 * 3600 * 1000, // 7 days
         });
     } catch (error) {
         if(error.message === 'Username atau Password salah') {
