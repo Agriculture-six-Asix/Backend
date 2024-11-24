@@ -1,16 +1,16 @@
 import { pool } from "../config/configDB.js";
 import crypto from "crypto";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 
-async function registerUser(full_name, email, username, password) {
+async function registerUser(fname, lname, email, username, password) {
     const conn = await pool.getConnection();
-    const hashedPassword = await bcrypt.hash(password, 10);
     const uuid = crypto.randomUUID();
+    
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const [results] = await conn.query(
-        'INSERT INTO Users (user_id, full_name, email, username, password) VALUES (?, ?, ?, ?, ?)',
-        [uuid, full_name, email, username, hashedPassword]
+        'INSERT INTO Users (id, fname, lname, email, username, password) VALUES (?, ?, ?, ?, ?, ?)',
+        [uuid, fname, lname, email, username, hashedPassword]
     );
     pool.releaseConnection(conn);
     return results;

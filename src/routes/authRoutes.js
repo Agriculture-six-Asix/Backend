@@ -11,4 +11,8 @@ authRoutes.post('/login', async (req, res, next) => {
     await authController.loginUser(req, res, next);
 });
 
+authRoutes.post('/logout', async (req, res, next) => {
+    await authController.logoutUser(req, res, next);
+});
+
 export default authRoutes;

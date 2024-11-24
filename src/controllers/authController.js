@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 async function registerUser(req, res, next) {
     try {
         const { fname, lname, email, username, password } = req.body;
-        if (!fname || !lname || !email || !username || !password) {
+        if (!fname || !email || !username || !password) {
             throw new(responseError('Semua data harus diisi', 400, false));
         }
 
@@ -38,8 +38,9 @@ async function loginUser(req, res, next) {
         const user = await authServices.loginUser(username, password);
         
         const token = jwt.sign({
-            id: user.id
-        }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.JWT_ACCESS_EXIPRES_IN });
+            id: user.id,
+            role: user.role,
+        }, process.env.JWT_ACCESS_SECRET,{ expiresIn: process.env.JWT_ACCESS_EXPIRES_IN });
 
         res.status(200).json({
             message: 'Login berhasil',
@@ -61,7 +62,27 @@ async function loginUser(req, res, next) {
     }
 }
 
+async function logoutUser(req, res, next) {
+    try {
+        const token = req.headers['authorization'].split(' ')[1];
+        if (token) {
+            jwt.verify(token, process.env.JWT_ACCESS_SECRET, async (err, user) => {
+                if(!err) {
+                    await authServices.logoutUser(token);
+                }
+            });
+        }
+        res.status(200).json({
+            message: 'Logout berhasil',
+            success: true,
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
 export const authController = {
     registerUser,
-    loginUser
+    loginUser,
+    logoutUser
 };

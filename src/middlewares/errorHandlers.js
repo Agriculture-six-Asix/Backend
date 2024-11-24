@@ -16,6 +16,7 @@ export function errorHandlers(err, req, res, next) {
 
     return res.status(500).json({
         message: 'Internal Server Error',
+        stacktrace: err,
         success: false,
         code: 500,
         data: null
