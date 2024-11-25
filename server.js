@@ -8,7 +8,7 @@ import tagRoutes from "./src/routes/tagRoutes.js";
 import ratingRoutes from "./src/routes/ratingRoutes.js";
 import forumRoutes from "./src/routes/forumRoutes.js";
 import repliesRoutes from "./src/routes/repliesRoutes.js";
-// import cors from 'cors';
+import cors from 'cors';
 
 
 const app = express();
@@ -16,7 +16,7 @@ const port = process.env.PORT;
 
 const baseEndpoint = '/api/v1';
 
-// app.use(cors());
+app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 
