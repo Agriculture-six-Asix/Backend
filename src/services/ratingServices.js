@@ -10,6 +10,17 @@ async function getAllRatings() {
     return ratings;
 }
 
+async function createRating(user_id, score, content) {
+    const conn = await pool.getConnection();
+    const [result] = await conn.query(
+        'INSERT INTO ratings (user_id, score, content) VALUES (?, ?, ?)',
+        [user_id, score, content]
+    );
+    pool.releaseConnection(conn);
+    return result;
+}
+
 export const ratingServices = {
-    getAllRatings
+    getAllRatings,
+    createRating
 }

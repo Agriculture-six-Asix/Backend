@@ -10,6 +10,17 @@ async function getRepliesByForumId(forum_id) {
     return replies;
 }
 
+async function createReply(user_id, forum_id, content) {
+    const conn = await pool.getConnection();
+    const [result] = await conn.query(
+        'INSERT INTO replies (user_id, forum_id, content) VALUES (?, ?, ?)',
+        [user_id, forum_id, content]
+    );
+    pool.releaseConnection(conn);
+    return result;
+}
+
 export const repliesServices = {
-    getRepliesByForumId
+    getRepliesByForumId,
+    createReply
 }

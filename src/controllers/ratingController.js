@@ -20,6 +20,32 @@ async function getAllRatings(req, res, next) {
     }
 }
 
+async function createRating(req, res, next) {
+    try {
+        const user_id = req.user.id;
+        const { score, content } = req.body;
+
+        if(!score || !content) {
+            throw new responseError('Data tidak lengkap', 400, false);
+        }
+
+        const newRating = await ratingServices.createRating(user_id, score, content);
+
+        res.status(201).json({
+            message: 'Rating berhasil dibuat',
+            success: true,
+            data: {
+                user_id: user_id,
+                score: score,
+                content: content
+            }
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
 export const ratingController = {
-    getAllRatings
+    getAllRatings,
+    createRating
 }
