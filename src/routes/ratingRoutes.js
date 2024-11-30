@@ -12,4 +12,8 @@ ratingRoutes.post('/create', verifyUser, async (req, res, next) => {
     await ratingController.createRating(req, res, next);
 });
 
+ratingRoutes.delete('/delete/:id', verifyUser, async (req, res, next) => {
+    await ratingController.deleteRating(req, res, next);
+});
+
 export default ratingRoutes;
