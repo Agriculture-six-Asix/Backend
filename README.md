@@ -1,6 +1,7 @@
-## Backend Kebun Bibit Wonorejo
+Backend Kebun Bibit Wonorejo
+============================
 
-### Clone Repository
+## Clone Repository
 ```bash
 # Using HTTPS
 git clone https://github.com/Agriculture-six-Asix/Backend.git
@@ -10,7 +11,7 @@ git clone https://github.com/Agriculture-six-Asix/Backend.git
 git clone git@github.com:Agriculture-six-Asix/Backend.git
 ```
 
-### Initialize the project
+## Initialize the project
 ```bash
 cd Backend/
 ```
@@ -28,7 +29,7 @@ yarn install
 pnpm install
 ```
 
-### Create the environment for development and production
+## Create the environment for development and production
 #### Using Bash (or any other shell)
 ```bash
 # for Development Environment
@@ -48,7 +49,7 @@ Copy-Item .env.example .env.dev
 Copy-Item .env.example .env
 ```
 #### Then fill the necessesary data for the environment
-### Start the Project
+## Start the Project
 #### Using npm
 ```bash
 #for Development
@@ -77,4 +78,4 @@ pnpm run dev
 pnpm run start
 ```
 
-### You can read the API docs [here](./docs/)
+## You can read the API docs [here](./docs/)
