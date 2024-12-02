@@ -20,7 +20,33 @@ async function createReply(user_id, forum_id, content) {
     return result;
 }
 
+async function deleteReply(id, user_id) {
+    const conn = await pool.getConnection();
+    const [reply] = await conn.query(
+        'SELECT id, user_id FROM replies WHERE id = ?',
+        [id]
+    );
+
+    if (reply.length === 0) {
+        throw new Error('Reply tidak ditemukan');
+    }
+
+    if (reply[0].user_id !== user_id) {
+        throw new Error('Anda tidak memiliki akses');
+    }
+
+    const [result] = await conn.query(
+        'DELETE FROM replies WHERE id = ? AND user_id = ?',
+        [id, user_id]
+    );
+    result.reply = reply[0];
+
+    pool.releaseConnection(conn);
+    return result;
+}
+
 export const repliesServices = {
     getRepliesByForumId,
-    createReply
+    createReply,
+    deleteReply
 }

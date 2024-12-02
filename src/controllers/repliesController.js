@@ -53,7 +53,35 @@ async function createReply(req, res, next) {
     }
 }
 
+async function deleteReply(req, res, next) {
+    try {
+        const id = req.params.id;
+        const user_id = req.user.id;
+
+        if (!id) {
+            throw new responseError('ID tidak ditemukan', 400, false);
+        }
+        const result = await repliesServices.deleteReply(id, user_id);
+        res.status(200).json({
+            message: 'Balasan berhasil dihapus',
+            success: true,
+            data: {
+                reply: result.reply
+            }
+        });
+    } catch (error) {
+        if (error.message === "Reply tidak ditemukan") {
+            next(new responseError('Reply tidak ditemukan', 404, false));
+        } else if (error.message === "Anda tidak memiliki akses") {
+            next(new responseError('Anda tidak memiliki akses', 403, false));
+        } else {
+            next(error);
+        }
+    }
+}
+
 export const repliesController = {
     getRepliesByForumId,
-    createReply
+    createReply,
+    deleteReply
 }
