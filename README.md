@@ -4,6 +4,8 @@
 ```bash
 # Using HTTPS
 git clone https://github.com/Agriculture-six-Asix/Backend.git
+```
+```bash
 # Using SSH
 git clone git@github.com:Agriculture-six-Asix/Backend.git
 ```
@@ -16,8 +18,12 @@ cd Backend/
 ```bash
 # Using npm
 npm install
+```
+```bash
 # Using yarn
 yarn install
+```
+```bash
 # Using pnpm
 pnpm install
 ```
@@ -27,6 +33,8 @@ pnpm install
 ```bash
 # for Development Environment
 cp .env.example .env.dev
+```
+```bash
 # for Production Environment
 cp .env.example .env
 ```
@@ -34,6 +42,8 @@ cp .env.example .env
 ```pwsh
 # for Development Environment 
 Copy-Item .env.example .env.dev
+```
+```pwsh
 # for Production Environment
 Copy-Item .env.example .env
 ```
@@ -43,6 +53,8 @@ Copy-Item .env.example .env
 ```bash
 #for Development
 npm run dev
+```
+```bash
 #for Production
 npm run start
 ```
@@ -50,6 +62,8 @@ npm run start
 ```bash
 #for Development
 yarn dev
+```
+```bash
 #for Production
 yarn start
 ```
@@ -57,6 +71,8 @@ yarn start
 ```bash
 #for Development
 pnpm run dev
+```
+```bash
 #for Production
 pnpm run start
 ```
