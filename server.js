@@ -9,6 +9,7 @@ import ratingRoutes from "./src/routes/ratingRoutes.js";
 import forumRoutes from "./src/routes/forumRoutes.js";
 import repliesRoutes from "./src/routes/repliesRoutes.js";
 import cors from 'cors';
+import imageRouter from "./src/routes/imagesRoutes.js";
 
 
 const app = express();
@@ -17,10 +18,12 @@ const port = process.env.PORT;
 const baseEndpoint = '/api/v1';
 
 app.use(cors());
+
+app.use(`${baseEndpoint}/images`, imageRouter);
+
 app.use(bodyParser.json());
 app.use(express.json());
 
-// TODO: add routes here
 // auth routes
 app.use(`${baseEndpoint}/auth`, authRoutes);
 // user routes
@@ -35,7 +38,6 @@ app.use(`${baseEndpoint}/rating`, ratingRoutes);
 app.use(`${baseEndpoint}/forum`, forumRoutes);
 // forum replies routes
 app.use(`${baseEndpoint}/forum`, repliesRoutes);
-
 
 app.use(errorHandlers);
 
