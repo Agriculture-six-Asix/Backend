@@ -78,4 +78,4 @@ pnpm run dev
 pnpm run start
 ```
 
-## You can read the API docs [here](./docs/)
+## You can read the API docs [here (STILL WIP)](./docs/)
