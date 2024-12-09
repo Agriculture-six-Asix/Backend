@@ -15,3 +15,7 @@ package-lock.json
 #SQL files
 database
 *.sql
+
+#Misc
+public/images/user/
+!public/images/user/
