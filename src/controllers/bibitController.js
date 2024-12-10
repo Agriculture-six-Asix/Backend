@@ -22,7 +22,7 @@ async function getAllBibit(req, res, next) {
 
 async function getBibitById(req, res, next) {
     try {
-        const id = req.params;
+        const id = req.params.id;
         const bibit = await bibitServices.getBibitById(id);
         if(!bibit) {
             throw new responseError('Bibit tidak ditemukan', 404, false);

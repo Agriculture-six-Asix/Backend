@@ -21,7 +21,7 @@ async function getAllForums(req, res, next) {
 
 async function getForumById(req, res, next) {
     try {
-        const { id } = req.params;
+        const { id } = req.params.id;
         const forum = await forumServices.getForumById(id);
         if (!forum) {
             throw new responseError('Forum tidak ditemukan', 404, false);

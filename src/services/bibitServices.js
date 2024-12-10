@@ -16,6 +16,7 @@ async function getBibitById(id) {
         'SELECT * FROM bibits WHERE id = ?',
         [id]
     );
+
     pool.releaseConnection(conn);
     return bibit[0];
 }
