@@ -16,20 +16,20 @@ async function registerUser(fname, lname, email, username, password) {
     return results;
 }
 
-async function loginUser(username, password) {
+async function loginUser(email, password) {
     const conn = await pool.getConnection();
     const [users] = await conn.query(
-        'SELECT * FROM Users WHERE username = ?',
-        [username]
+        'SELECT * FROM Users WHERE email = ?',
+        [email]
     );
 
     if (users.length === 0) {
-        throw new Error('Username atau Password salah');
+        throw new Error('Email atau Password salah');
     };
 
     const isValidPassword = await bcrypt.compare(password, users[0].password);
     if(!isValidPassword) {
-        throw new Error('Username atau Password salah');
+        throw new Error('Email atau Password salah');
     };
     
     return users[0];

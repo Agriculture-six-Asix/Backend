@@ -30,12 +30,12 @@ async function registerUser(req, res, next) {
 
 async function loginUser(req, res, next) {
     try {
-       const { username, password } = req.body;
-        if (!username || !password) {
-            throw new responseError('Username dan Password harus diisi', 400, false);
+       const { email, password } = req.body;
+        if (!email || !password) {
+            throw new responseError('Email dan Password harus diisi', 400, false);
         }
 
-        const user = await authServices.loginUser(username, password);
+        const user = await authServices.loginUser(email, password);
         
         const token = jwt.sign({
             id: user.id,
@@ -47,16 +47,19 @@ async function loginUser(req, res, next) {
             success: true,
             data: {
                 user: {
-                    id: user.user_id,
+                    id: user.id,
+                    fname: user.fname,
+                    lname: user.lname,
                     username: user.username,
+                    email: user.email,
                     photo: user.photo,
                 },
                 token: token,
             }
         });
     } catch (error) {
-        if(error.message === 'Username atau Password salah') {
-            next(new responseError('Username atau Password salah', 401, false));
+        if(error.message === 'Email atau Password salah') {
+            next(new responseError('Email atau Password salah', 401, false));
         } else {
             next(error);
         }
