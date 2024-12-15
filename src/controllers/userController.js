@@ -35,7 +35,7 @@ async function changePassword(req, res, next) {
         }
 
         if (!oldPassword || !newPassword) {
-            throw new responseError('Password invalid', 400, false);
+            throw new responseError('Password salah', 400, false);
         }
 
         const user = await userServices.changePassword(id, oldPassword, newPassword);
@@ -50,7 +50,7 @@ async function changePassword(req, res, next) {
         if (error.message === 'User tidak ditemukan') {
             next(new responseError('User tidak ditemukan', 404, false));
         } else if (error.message === 'Password invalid') {
-            next(new responseError('Password invalid', 400, false));
+            next(new responseError('Password salah', 400, false));
         } else {
             next(error);
         }
@@ -67,7 +67,7 @@ async function editProfiles(req, res, next) {
             throw new responseError('ID tidak ditemukan', 400, false);
         }
 
-        if (!fname || !lname || !username) {
+        if (!fname || !username) {
             throw new responseError('Semua data harus diisi', 400, false);
         }
 
@@ -87,6 +87,8 @@ async function editProfiles(req, res, next) {
             next(new responseError('User tidak ditemukan', 404, false));
         } else if (error.message === 'Semua data harus diisi') {
             next(new responseError('Semua data harus diisi', 400, false));
+        } else if (error.code === 'ER_DUP_ENTRY') {
+            next(new responseError('Username sudah digunakan', 400, false));
         } else {
             console.log(error);
             next(error);

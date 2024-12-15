@@ -4,7 +4,7 @@ async function getAllForums() {
     const conn = await pool.getConnection();
 
     const [forums] = await conn.query(
-        'SELECT f.id, CONCAT(u.fname, " ", u.lname) as fullname, u.photo, f.title, f.content, f.created_at, f.updated_at, IFNULL(SUM(DISTINCT r.id),0) AS reply_count FROM forums f INNER JOIN users u ON f.user_id = u.id LEFT JOIN replies r ON f.id = r.forum_id GROUP BY f.id ORDER BY f.CREATED_AT DESC'
+        'SELECT f.id, CONCAT(u.fname, " ", u.lname) as fullname, u.photo, f.title, f.content, f.created_at, f.updated_at, IFNULL(COUNT(DISTINCT r.id),0) AS reply_count FROM forums f INNER JOIN users u ON f.user_id = u.id LEFT JOIN replies r ON f.id = r.forum_id GROUP BY f.id ORDER BY f.CREATED_AT DESC'
     );
 
     if (forums.length !== 0) {
@@ -25,7 +25,7 @@ async function getForumById(id) {
     const conn = await pool.getConnection();
 
     const [forum] = await conn.query(
-        'SELECT f.id, CONCAT(u.fname, " ", u.lname) as fullname, u.photo, f.title, f.content, f.created_at, f.updated_at, IFNULL(SUM(DISTINCT r.id), 0) AS reply_count FROM forums f INNER JOIN users u ON f.user_id = u.id LEFT JOIN replies r ON f.id = r.forum_id WHERE f.id = ? GROUP BY f.id',
+        'SELECT f.id, CONCAT(u.fname, " ", u.lname) as fullname, u.photo, f.title, f.content, f.created_at, f.updated_at, IFNULL(COUNT(DISTINCT r.id), 0) AS reply_count FROM forums f INNER JOIN users u ON f.user_id = u.id LEFT JOIN replies r ON f.id = r.forum_id WHERE f.id = ? GROUP BY f.id',
         [id]
     );
 

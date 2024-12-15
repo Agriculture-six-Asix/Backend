@@ -70,7 +70,6 @@ async function editProfiles(id, fname, lname, username, photo) {
         if(user[0].photo) {
            const oldPhotoPath = path.join(process.cwd(), 'public', 'images', 'user', user[0].photo);
            await fs.promises.unlink(oldPhotoPath);
-
         }
 
         const [photoRes] = await conn.query(
