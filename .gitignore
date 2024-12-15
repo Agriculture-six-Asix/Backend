@@ -17,5 +17,4 @@ database
 *.sql
 
 #Misc
-public/images/user/
-!public/images/user/
+public/images/user/*
